@@ -1,0 +1,25 @@
+{
+  "name": "food-finder",
+  "version": "1.0.0",
+  "description": "Finds a random food establishment in your area to eat at!",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.16.2",
+    "jquery": "^3.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tangelo90/food-finder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tangelo90/food-finder/issues"
+  },
+  "homepage": "https://github.com/tangelo90/food-finder#readme"
+}
