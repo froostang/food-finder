@@ -3,6 +3,18 @@ var app = express();
 var router = express.Router();
 var path = __dirname + '/views/';
 var lib = __dirname + '/lib/';
+var bodyParser = require('body-parser');
+// contins function for returning yelp JSON based on lat/long
+var yt = require('./lib/yelp-testing.js');
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+
+// parse application/json
+app.use(bodyParser.json())
+
+// set public static directory for css
+app.use(express.static(path));
 
 router.use(function (req,res,next) {
   console.log("/" + req.method);
@@ -21,16 +33,20 @@ router.get("/contact",function(req,res){
   res.sendFile(path + "contact.html");
 });
 
-// will server as api for testing
+// pass query string with lat/long and queries yelp API
 router.get("/data",function(req,res){
-  var q = url.parse(req.url, true).query;
-  console.log(q);
-  // try {
-  //   var txt = q.user + " is your user request";
-  // } catch(err) {
-  //   var txt = "incorrect query string, try 'user'";
-  // }
-  //res.end(txt);
+  var lat = req.query.lat;
+  var long = req.query.long;
+
+  if(lat == undefined || long == undefined) {
+    // default return if querie(s) don't exist
+    res.send("Please specify query string with lat and long ex. /data?lat=100&long=100");
+  } else {
+    yt.getYelpFood(lat, long).then(function(data) {
+      res.json(data);
+    });
+  }
+
 });
 
 app.use("/",router);

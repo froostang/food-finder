@@ -1,15 +1,80 @@
 <html>
   <head>
     <meta charset="UTF-8">
-
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous">
+    </script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+    <link href="cover.css" rel="stylesheet">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Food Finderrrr</title>
   </head>
   <body>
-  Hi, let's find food
+    <div class="site-wrapper">
+      <div class="site-wrapper-inner">
+        <div class="cover-container">
 
-  <button id="Run">Find Place</button>
-  <div id="FoodPlace">
+          <div class="masthead clearfix">
+              <h3>Hi, let's find food</h3>
+          </div>
 
-  </div>
+          <div class="inner cover">
+            <h1 class="cover-heading" id="name"></h1>
+            <p class="lead" id="details"></p>
+            <p class="lead">
+              <button class="btn btn-lg btn-default" onclick="getLocation()">Find Food!</button>
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Powered by</p>
+              <img src="https://s3-media2.fl.yelpcdn.com/assets/srv0/yelp_styleguide/17089be275f0/assets/img/logos/logo_desktop_xsmall_outline.png" alt="Yelp logo" class="main-footer_logo-copyright" srcset="https://s3-media1.fl.yelpcdn.com/assets/srv0/yelp_styleguide/0aade8725c91/assets/img/logos/logo_desktop_xsmall_outline@2x.png 2x">
+            </div>
+          </div>
+
+        </div><!-- /cover-container -->
+      </div><!-- /site-wrapper-inner -->
+  </div><!-- /site-wrapper -->
+
+  <script>
+  var x = document.getElementById("details");
+  var y = document.getElementById("name");
+
+  function getLocation() {
+      if (navigator.geolocation) {
+          $('#details').html("<img src='https://m.popkey.co/dc6bd3/Llgbv.gif' height='60' width='85' />");
+          y.innerHTML = "";
+          navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+          x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+  }
+  function metersConvert(meters) {
+    return Number((meters / 1609.344).toFixed(2));
+  }
+  // functional note: consider storing full yelp API business array for location and select
+  // random food place "on click" so we're not hitting the yelp API every click
+  function showPosition(position) {
+    //var url = "localhost:3000"
+    $.ajax({
+        url: "https://c00a87d9.ngrok.io/data?lat=" + position.coords.latitude + "&long=" + position.coords.longitude,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {
+          var m = metersConvert(res.distance);
+            y.innerHTML = res.name;
+            x.innerHTML = "Distance: " + m + " Miles";
+            // console.log(res);
+        }
+    });
+  }
+  </script>
   </body>
 </html>
