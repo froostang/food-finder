@@ -13,6 +13,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+// set public static directory for css
+app.use(express.static(path));
+
 router.use(function (req,res,next) {
   console.log("/" + req.method);
   next();
