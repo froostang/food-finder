@@ -27,6 +27,8 @@
           <div class="inner cover">
             <h1 class="cover-heading" id="name"></h1>
             <p class="lead" id="details"></p>
+            <p class="lead" id="map"></p>
+            <p class="lead" id="loc"></p>
             <p class="lead">
               <button class="btn btn-lg btn-default" onclick="getLocation()">Find Food!</button>
             </p>
@@ -44,13 +46,18 @@
   </div><!-- /site-wrapper -->
 
   <script>
+  // script needs some cleanup, but rough layout here works
   var x = document.getElementById("details");
   var y = document.getElementById("name");
+  var z = document.getElementById("loc");
+  var a = document.getElementById("map");
 
   function getLocation() {
       if (navigator.geolocation) {
           $('#details').html("<img src='https://m.popkey.co/dc6bd3/Llgbv.gif' height='60' width='85' />");
           y.innerHTML = "";
+          z.innerHTML = "";
+          a.innerHTML = "";
           navigator.geolocation.getCurrentPosition(showPosition);
       } else {
           x.innerHTML = "Geolocation is not supported by this browser.";
@@ -59,18 +66,22 @@
   function metersConvert(meters) {
     return Number((meters / 1609.344).toFixed(2));
   }
+
   // functional note: consider storing full yelp API business array for location and select
   // random food place "on click" so we're not hitting the yelp API every click
   function showPosition(position) {
     //var url = "localhost:3000"
     $.ajax({
-        url: "https://c00a87d9.ngrok.io/data?lat=" + position.coords.latitude + "&long=" + position.coords.longitude,
+        url: "https://9368fd94.ngrok.io/data?lat=" + position.coords.latitude + "&long=" + position.coords.longitude,
         type: 'GET',
         dataType: 'json', // added data type
         success: function(res) {
           var m = metersConvert(res.distance);
             y.innerHTML = res.name;
-            x.innerHTML = "Distance: " + m + " Miles";
+            x.innerHTML = "Distance: " + m + " Miles</br>";
+            var pic = 'https://maps.googleapis.com/maps/api/staticmap?center=' + res.coordinates.latitude + ',' + res.coordinates.longitude + '&zoom=12&size=400x400&maptype=roadmap&markers=color:blue%7Clabel:F%7C' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyCq3_OiAfydqmb30ahMoFEP05R_DbzZZBg';
+            $('#map').html("<img src='" + pic + "'" + " />");
+            z.innerHTML = res.location.display_address.toString();
             // console.log(res);
         }
     });
