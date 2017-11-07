@@ -72,14 +72,14 @@
   function showPosition(position) {
     //var url = "localhost:3000"
     $.ajax({
-        url: "https://9368fd94.ngrok.io/data?lat=" + position.coords.latitude + "&long=" + position.coords.longitude,
+        url: "http://localhost:3000/data?lat=" + position.coords.latitude + "&long=" + position.coords.longitude,
         type: 'GET',
         dataType: 'json', // added data type
         success: function(res) {
           var m = metersConvert(res.distance);
             y.innerHTML = res.name;
             x.innerHTML = "Distance: " + m + " Miles</br>";
-            var pic = 'https://maps.googleapis.com/maps/api/staticmap?center=' + res.coordinates.latitude + ',' + res.coordinates.longitude + '&zoom=12&size=400x400&maptype=roadmap&markers=color:blue%7Clabel:F%7C' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyCq3_OiAfydqmb30ahMoFEP05R_DbzZZBg';
+            var pic = 'https://maps.googleapis.com/maps/api/staticmap?center=' + res.coordinates.latitude + ',' + res.coordinates.longitude + '&zoom=12&size=400x400&maptype=roadmap&markers=color:blue%7Clabel:F%7C' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyCq3_OiAfydqmb30ahMoFEP05R_DbzZZBg'; // remember API key must be configured via goodle maps site
             $('#map').html("<img src='" + pic + "'" + " />");
             z.innerHTML = res.location.display_address.toString();
             // console.log(res);
