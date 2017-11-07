@@ -72,7 +72,7 @@
   function showPosition(position) {
     //var url = "localhost:3000"
     $.ajax({
-        url: "http://localhost:3000/data?lat=" + position.coords.latitude + "&long=" + position.coords.longitude,
+        url: "https://obscure-springs-33185.herokuapp.com//data?lat=" + position.coords.latitude + "&long=" + position.coords.longitude,
         type: 'GET',
         dataType: 'json', // added data type
         success: function(res) {
