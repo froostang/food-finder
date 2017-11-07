@@ -79,7 +79,7 @@
           var m = metersConvert(res.distance);
             y.innerHTML = res.name;
             x.innerHTML = "Distance: " + m + " Miles</br>";
-            var pic = 'https://maps.googleapis.com/maps/api/staticmap?center=' + res.coordinates.latitude + ',' + res.coordinates.longitude + '&zoom=12&size=400x400&maptype=roadmap&markers=color:blue%7Clabel:F%7C' + position.coords.latitude + ',' + position.coords.longitude + '&key=AIzaSyCq3_OiAfydqmb30ahMoFEP05R_DbzZZBg'; // remember API key must be configured via goodle maps site
+            var pic = 'https://maps.googleapis.com/maps/api/staticmap?center=' + res.coordinates.latitude + ',' + res.coordinates.longitude + '&zoom=12&size=400x400&maptype=roadmap&markers=color:blue%7Clabel:Food%7C' + res.coordinates.latitude + ',' + res.coordinates.longitude + '&key=AIzaSyCq3_OiAfydqmb30ahMoFEP05R_DbzZZBg'; // remember API key must be configured via goodle maps site
             $('#map').html("<img src='" + pic + "'" + " />");
             z.innerHTML = res.location.display_address.toString();
             // console.log(res);
